@@ -573,7 +573,7 @@ app.post(
 );
 
 app.post(
-  "/kick",
+  "/ban",
   validateHeaders([
     {
       param_key: "token",
@@ -626,18 +626,27 @@ app.post(
       });
     }
 
-    usersJoinedChannels.find(
+    const userChannel = usersJoinedChannels.find(
       (userChannel) =>
         userChannel.channelName === channel.channelName &&
         userChannel.username === req.body.target
-    ).banned = true;
+    );
+
+    if (!userChannel) {
+      return res.send({
+        success: false,
+        reason: "Target is not part of this channel",
+      });
+    }
+
+    userChannel.ban = true;
 
     res.send({ success: true });
   }
 );
 
 app.get(
-  "/message",
+  "/messages",
   validateHeaders([
     {
       param_key: "token",
@@ -675,24 +684,31 @@ app.get(
       });
     }
 
-    const userJoined = usersJoinedChannels.findIndex(
+    const userJoined = usersJoinedChannels.find(
       (userChannel) =>
         userChannel.channelName === channel.channelName &&
         userChannel.username === user.username
     );
 
-    if (userJoined < 0) {
+    if (userJoined && userJoined.banned) {
+      return res.send({
+        success: false,
+        reason: "User is banned",
+      });
+    }
+
+    if (!userJoined) {
       return res.send({
         success: false,
         reason: "User is not part of this channel",
       });
     }
 
-    const channelMessages = messages.filter(
-      (message) => message.channelName === channel.channelName
-    );
+    const channelMessages = messages
+      .filter((message) => message.channelName === channel.channelName)
+      .map((message) => ({ from: message.from, contents: message.contents }));
 
-    res.send({ success: true, messages });
+    res.send({ success: true, messages: channelMessages });
   }
 );
 
@@ -741,13 +757,20 @@ app.post(
       });
     }
 
-    const userJoined = usersJoinedChannels.findIndex(
+    const userJoined = usersJoinedChannels.find(
       (userChannel) =>
         userChannel.channelName === channel.channelName &&
         userChannel.username === user.username
     );
 
-    if (userJoined < 0) {
+    if (userJoined && userJoined.banned) {
+      return res.send({
+        success: false,
+        reason: "User is banned",
+      });
+    }
+
+    if (!userJoined) {
       return res.send({
         success: false,
         reason: "User is not part of this channel",
@@ -755,7 +778,7 @@ app.post(
     }
 
     messages.push({
-      username: user.username,
+      from: user.username,
       channelName: channel.channelName,
       contents: req.body.contents,
     });
