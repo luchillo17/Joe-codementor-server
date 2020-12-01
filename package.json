@@ -1,0 +1,26 @@
+{
+  "name": "joe-codementor-server",
+  "version": "1.0.0",
+  "description": "Joe-codementor-server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luchillo17/Joe-codementor-server.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luchillo17/Joe-codementor-server/issues"
+  },
+  "homepage": "https://github.com/luchillo17/Joe-codementor-server#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
