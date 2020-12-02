@@ -248,16 +248,23 @@ app.get(
       });
     }
 
-    const userJoined = usersJoinedChannels.findIndex(
+    const userJoined = usersJoinedChannels.find(
       (userChannel) =>
         userChannel.channelName === channel.channelName &&
         userChannel.username === user.username
     );
 
-    if (userJoined < 0) {
+    if (!userJoined) {
       return res.send({
         success: false,
         reason: "User is not part of this channel",
+      });
+    }
+
+    if (userJoined.banned) {
+      return res.send({
+        success: false,
+        reason: "User is banned",
       });
     }
 
@@ -626,20 +633,25 @@ app.post(
       });
     }
 
-    const userChannel = usersJoinedChannels.find(
+    const userChannelIndex = usersJoinedChannels.findIndex(
       (userChannel) =>
         userChannel.channelName === channel.channelName &&
         userChannel.username === req.body.target
     );
 
-    if (!userChannel) {
+    if (userChannelIndex < 0) {
       return res.send({
         success: false,
         reason: "Target is not part of this channel",
       });
     }
 
-    userChannel.ban = true;
+    const bannedUserChannel = {
+      ...usersJoinedChannels[userChannelIndex],
+      banned: true,
+    };
+
+    usersJoinedChannels[userChannelIndex] = bannedUserChannel;
 
     res.send({ success: true });
   }
@@ -690,17 +702,17 @@ app.get(
         userChannel.username === user.username
     );
 
-    if (userJoined && userJoined.banned) {
-      return res.send({
-        success: false,
-        reason: "User is banned",
-      });
-    }
-
     if (!userJoined) {
       return res.send({
         success: false,
         reason: "User is not part of this channel",
+      });
+    }
+
+    if (userJoined.banned) {
+      return res.send({
+        success: false,
+        reason: "User is banned",
       });
     }
 
@@ -763,17 +775,17 @@ app.post(
         userChannel.username === user.username
     );
 
-    if (userJoined && userJoined.banned) {
-      return res.send({
-        success: false,
-        reason: "User is banned",
-      });
-    }
-
     if (!userJoined) {
       return res.send({
         success: false,
         reason: "User is not part of this channel",
+      });
+    }
+
+    if (userJoined.banned) {
+      return res.send({
+        success: false,
+        reason: "User is banned",
       });
     }
 

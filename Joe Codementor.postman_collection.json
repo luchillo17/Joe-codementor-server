@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "9cab9012-6fc5-4ad6-8096-0e1fbbd2192b",
+		"name": "Joe Codementor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test\",\n    \"password\": \"psswd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b26c658d-408f-448f-9acf-a9f3d54066da",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test\",\n    \"password\": \"psswd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/create-channel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channelName\": \"channel1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/create-channel",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"create-channel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/join-channel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channelName\": \"channel1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/join-channel",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"join-channel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/leave-channel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channelName\": \"channel1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/leave-channel",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"leave-channel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/joined",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/joined?channelName=channel1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"joined"
+					],
+					"query": [
+						{
+							"key": "channelName",
+							"value": "channel1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/kick",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channelName\": \"channel1\",\n    \"target\": \"test1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/kick",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"kick"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/ban",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channelName\": \"channel1\",\n    \"target\": \"test1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/ban",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ban"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/messages",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/messages?channelName=channel1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"messages"
+					],
+					"query": [
+						{
+							"key": "channelName",
+							"value": "channel1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/message",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"channelName\": \"channel1\",\n    \"contents\": \"lorem ipsum\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/message",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"message"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
